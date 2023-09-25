@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<table>
+    <tr>
+        <th>コード:　</th>
+        <td>{{ rec_one["荷物事故コード"]}}</td>
+    </tr>
+    <tr>
+        <th>報告部署:　</th>
+        <td>{{ rec_one["報告部署名"]}}</td>
+    </tr>
+    <tr>
+        <th>事故発生日:　</th>
+        <td>{{ rec_one["発生日"]}}</td>
+    </tr>
+    <tr>
+        <th>荷主:　</th>
+        <td>{{ rec_one["荷主名"]}}</td>
+    </tr>
+    <tr>
+        <th>責任部署:　</th>
+        <td>{{ rec_one["責任部署名"]}}</td>
+    </tr>
+    <tr>
+        <th>事故発生地:　</th>
+        <td>{{ rec_one["発生地"]}}</td>
+    </tr>
+    <tr>
+        <th>発生状況:　</th>
+        <td>{{ rec_one["発生状況"]}}</td>
+    </tr>
+    <tr>
+        <th>事故惹起者:　</th>
+        <td>{{ rec_one["事故惹起者"]}}</td>
+    </tr>
+    <tr>
+        <th>損害額:　</th>
+        <td>{{ rec_one["損害額"]}}</td>
+    </tr>
+</table>
+<h4>説明:</h4>
+<p>{{ rec_one["事故の詳細"]}}</p>
+<br>
+{% if path_list %}
+<p>事故画像:　</p>
+<table>
+    {% for path in path_list %}
+    <tr>
+        <img src="{{ url_for('static', filename=path)}}"/>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+<!-- <a href="/">戻る</a> -->
+{% endblock %}

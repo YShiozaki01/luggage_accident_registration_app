@@ -1,0 +1,136 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<form action="/result" method="post">
+    <table>
+        <tr>
+            <th>
+                <label>報告部署</label>
+            </th>
+            <td>
+                <select name="reporting_dept">
+                    <option value="00" disabled selected>--- 選択 ---</option>
+                    {% for dept1 in dept_list1 %}
+                        <option value="{{ dept1[0] }}">{{ dept1[1] }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <label>荷主</label>
+            </th>
+            <td>
+                <input type="text" name="consignor" value=""/>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <label>締め日</label>
+            </th>
+            <td>
+                <input type="text" name="closing_date_from" value=""/>　～　<input type="text" name="closing_date_to" value=""/>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <label>責任部署</label>
+            </th>
+            <td>
+                <select name="cause_dept">
+                    <option value="00" disabled selected>--- 選択 ---</option>
+                    {% for dept2 in dept_list2 %}
+                        <option value="{{ dept2[0] }}">{{ dept2[1] }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <label>発生地</label>
+            </th>
+            <td>
+                <input type="text" name="place_of_occurrence" value=""/>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <label>発生日</label>
+            </th>
+            <td>
+                <input type="text" name="accrual_date_from" value=""/>　～　<input type="text" name="accrual_date_to" value=""/>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <label>発生状況</label>
+            </th>
+            <td>
+                <select name="situation">
+                    <option value="0" disabled selected>--- 選択 ---</option>
+                    {% for situation in situation_list %}
+                        <option value="{{ situation[0] }}">{{ situation[1] }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <label>惹起者</label>
+            </th>
+            <td>
+                <select name="initiator">
+                    <option value="0" disabled selected>--- 選択 ---</option>
+                    {% for initiator in initiator_list %}
+                        <option value="{{ initiator[0] }}">{{ initiator[1] }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <label>損害額</label>
+            </th>
+            <td>
+                <input type="text" name="amount" value=""/>
+                <input type="radio" name="sign" value="0" checked>ちょうど</input>
+                <input type="radio" name="sign" value="1">以上</input>
+                <input type="radio" name="sign" value="2">以下</input>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <label>キーワード</label>
+            </th>
+            <td>
+                <input type="text" name="key_word" value=""/>
+            </td>
+        </tr>
+    </table>
+    <p></p>
+    <button type="submit">検索</button>
+</form>
+
+{% if records %}
+<table class="list" border="2">
+    <tr>
+        <th>部署</th>
+        <th>荷主</th>
+        <th>発生日</th>
+        <th>発生地</th>
+    </tr>
+    {% for rec in records %}
+    <tr>
+        <td>{{ rec["報告部署名"] }}</td>
+        <td>{{ (rec["荷主名"]) }}</td>
+        <td>{{ (rec["発生日"]) }}</td>
+        <td>{{ (rec["発生地"]) }}</td>
+        <td><a href="{{ url_for('show_detail', no0=rec['送信部署コード'],
+            no1=rec['管理番号'], no2=rec['明細番号'])}}">詳細</a></td>
+    </tr>
+{% endfor %}
+</table>
+{% endif %}
+<br>
+<a href="/">再検索</a>
+{% endblock %}
